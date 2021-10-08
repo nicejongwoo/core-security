@@ -10,6 +10,7 @@
 					<p>아이디와 비밀번호를 입력해주세요.</p>
 				</div>
 				<form class="form-horizontal" th:action="@{/login_proc}" method="post">
+					<input type="hidden" name="param1" value="param1">
 					<div class="form-group">
 						<input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required/>
 					</div>
