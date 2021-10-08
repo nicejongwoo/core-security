@@ -1,5 +1,6 @@
 package com.core.sec.security.config;
 
+import com.core.sec.security.handler.CustomAuthenticationSuccessHandler;
 import com.core.sec.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -20,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationDetailsSource authenticationDetailsSource;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login_proc")
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .defaultSuccessUrl("/")
+                .successHandler(authenticationSuccessHandler)
                 .permitAll()
         ;
 
