@@ -1,5 +1,6 @@
 package com.core.sec.security.config;
 
+import com.core.sec.security.handler.CustomAuthenticationFailureHandler;
 import com.core.sec.security.handler.CustomAuthenticationSuccessHandler;
 import com.core.sec.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
+    @Autowired
+    private CustomAuthenticationFailureHandler authenticationFailureHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(customAuthenticationProvider());
@@ -39,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/h2-console/**", "/users").permitAll()
+                .antMatchers("/", "/h2-console/**", "/users", "/login**").permitAll()
                 .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/messages").hasRole("MANAGER")
                 .antMatchers("/config").hasRole("ADMIN")
@@ -52,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .defaultSuccessUrl("/")
                 .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
                 .permitAll()
         ;
 

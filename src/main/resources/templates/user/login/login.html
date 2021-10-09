@@ -5,9 +5,12 @@
 
 	<body>
 		<div layout:fragment="content" class="container d-flex justify-content-center">
-			<div style="width:700px; margin-top: 30px; margin-bottom: 30px;">
-				<div class="panel">
+			<div style="margin-top: 30px; margin-bottom: 30px;" class="col-4">
+				<div class="panel text-center">
 					<p>아이디와 비밀번호를 입력해주세요.</p>
+				</div>
+				<div th:if="${param.error}" class="form-group">
+					<span th:text="${message}" class="d-block alert alert-danger text-center">에러메시지</span>
 				</div>
 				<form class="form-horizontal" th:action="@{/login_proc}" method="post">
 					<input type="hidden" name="param1" value="param1">
