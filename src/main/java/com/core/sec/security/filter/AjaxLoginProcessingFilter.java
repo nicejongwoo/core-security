@@ -1,7 +1,7 @@
 package com.core.sec.security.filter;
 
 import com.core.sec.domain.AccountDto;
-import com.core.sec.security.AjaxAuthenticationToke;
+import com.core.sec.security.AjaxAuthenticationToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -34,7 +34,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
             throw new IllegalArgumentException("username or password is empty");
         }
 
-        AjaxAuthenticationToke ajaxAuthenticationToke = new AjaxAuthenticationToke(accountDto.getUsername(), accountDto.getPassword());
+        AjaxAuthenticationToken ajaxAuthenticationToke = new AjaxAuthenticationToken(accountDto.getUsername(), accountDto.getPassword());
 
         return getAuthenticationManager().authenticate(ajaxAuthenticationToke);
     }
