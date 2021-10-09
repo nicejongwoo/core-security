@@ -1,6 +1,8 @@
 package com.core.sec.security.config;
 
 import com.core.sec.security.filter.AjaxLoginProcessingFilter;
+import com.core.sec.security.handler.AjaxAuthenticationFailureHandler;
+import com.core.sec.security.handler.AjaxAuthenticationSuccessHandler;
 import com.core.sec.security.provider.AjaxAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -46,9 +49,21 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public AjaxAuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AjaxAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public AjaxAuthenticationFailureHandler authenticationFailureHandler() {
+        return new AjaxAuthenticationFailureHandler();
+    }
+
+    @Bean
     public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
         AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
         ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
+        ajaxLoginProcessingFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        ajaxLoginProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
         return ajaxLoginProcessingFilter;
     }
 
