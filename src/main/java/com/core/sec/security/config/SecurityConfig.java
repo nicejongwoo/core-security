@@ -76,9 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //h2 console 사용을 위한 설정
         http
                 .csrf()
-                .disable();
-//                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/api/login"))
-//                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"));
+                .ignoringAntMatchers("/api/login", "/h2-console/**");
+
         http
                 .headers().frameOptions().disable();
     }
