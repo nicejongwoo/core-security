@@ -1,5 +1,6 @@
 package com.core.sec.controller.login;
 
+import com.core.sec.domain.Account;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -37,4 +38,13 @@ public class LoginController {
 
     }
 
+    @GetMapping("/denied")
+    public String deniedPage(@RequestParam(value = "message", required = false) String message, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = (Account) authentication.getPrincipal();
+
+        model.addAttribute("username", account.getUsername());
+        model.addAttribute("message", message);
+        return "user/login/denied";
+    }
 }

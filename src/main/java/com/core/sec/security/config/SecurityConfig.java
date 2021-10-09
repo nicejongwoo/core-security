@@ -1,5 +1,6 @@
 package com.core.sec.security.config;
 
+import com.core.sec.security.handler.CustomAccessDeniedHandler;
 import com.core.sec.security.handler.CustomAuthenticationFailureHandler;
 import com.core.sec.security.handler.CustomAuthenticationSuccessHandler;
 import com.core.sec.security.provider.CustomAuthenticationProvider;
@@ -8,11 +9,13 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -49,7 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/config").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
-                .and()
+        .and()
+                .exceptionHandling()
+                .accessDeniedHandler(customAccessDeniedHandler())
+        .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
@@ -58,11 +64,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .permitAll()
+
         ;
 
         //h2 console 사용을 위한 설정
         http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"));
         http.headers().frameOptions().disable();
+    }
+
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+        CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
+        customAccessDeniedHandler.setErrorPage("/denied");
+        return customAccessDeniedHandler;
     }
 
     @Override
