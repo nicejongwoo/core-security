@@ -1,6 +1,6 @@
 package com.core.sec.security.provider;
 
-import com.core.sec.security.AjaxAuthenticationToken;
+import com.core.sec.security.token.AjaxAuthenticationToken;
 import com.core.sec.security.service.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

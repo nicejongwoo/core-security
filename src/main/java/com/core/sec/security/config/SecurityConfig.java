@@ -1,9 +1,9 @@
 package com.core.sec.security.config;
 
-import com.core.sec.security.handler.CustomAccessDeniedHandler;
-import com.core.sec.security.handler.CustomAuthenticationFailureHandler;
-import com.core.sec.security.handler.CustomAuthenticationSuccessHandler;
-import com.core.sec.security.provider.CustomAuthenticationProvider;
+import com.core.sec.security.handler.FormAccessDeniedHandler;
+import com.core.sec.security.handler.FormAuthenticationFailureHandler;
+import com.core.sec.security.handler.FormAuthenticationSuccessHandler;
+import com.core.sec.security.provider.FormAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -26,14 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationDetailsSource authenticationDetailsSource;
 
     @Autowired
-    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+    private FormAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
-    private CustomAuthenticationFailureHandler authenticationFailureHandler;
+    private FormAuthenticationFailureHandler authenticationFailureHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(customAuthenticationProvider());
+        auth.authenticationProvider(formAuthenticationProvider());
     }
 
     @Override
@@ -77,10 +77,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public CustomAccessDeniedHandler customAccessDeniedHandler() {
-        CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
-        customAccessDeniedHandler.setErrorPage("/denied");
-        return customAccessDeniedHandler;
+    public FormAccessDeniedHandler customAccessDeniedHandler() {
+        FormAccessDeniedHandler formAccessDeniedHandler = new FormAccessDeniedHandler();
+        formAccessDeniedHandler.setErrorPage("/denied");
+        return formAccessDeniedHandler;
     }
 
     @Bean
@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationProvider customAuthenticationProvider() {
-        return new CustomAuthenticationProvider();
+    public AuthenticationProvider formAuthenticationProvider() {
+        return new FormAuthenticationProvider();
     }
 }
