@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -43,5 +45,13 @@ public class UserManagementController {
         model.addAttribute("roles", roles);
         return "admin/user/detail";
     }
+
+    @PostMapping("/users")
+    public String edit(AccountDto accountDto, RedirectAttributes redirectAttributes) {
+        userService.updateUser(accountDto);
+        redirectAttributes.addFlashAttribute("message", "사용자 정보가 수정되었습니다.");
+        return "redirect:/admin/users";
+    }
+
 
 }

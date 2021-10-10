@@ -9,6 +9,7 @@
 				<nav th:replace="fragments/admin/nav::nav(currentMenu='user')"></nav>
 				<div class="col-md-10 text-center pt-4">
 					<div class="container text-center">
+						<div class="alert alert-info" th:if="${message}" th:text="${message}"></div>
 						<table class="table">
 							<thead>
 								<tr class="table-info">
