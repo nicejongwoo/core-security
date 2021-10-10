@@ -8,6 +8,7 @@
                         <a th:href="@{/}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'home'}? active">대시보드</a>
                         <a th:href="@{/mypage}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'mypage'}? active">마이페이지</a>
                         <a th:href="@{/messages}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'messages'}? active">메시지</a>
+                        <a th:href="@{/api/messages}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'api-messages'}? active">API 메시지</a>
                         <a th:href="@{/config}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'config'}? active">환경설정</a>
                     </div>
                 </li>

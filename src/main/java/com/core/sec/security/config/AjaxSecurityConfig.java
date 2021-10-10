@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -36,6 +35,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/api/**")
                 .authorizeRequests()
+                .antMatchers("/api/login", "/api/login-view").permitAll()
                 .antMatchers("/api/messages").hasRole("MANAGER")
                 .anyRequest()
                 .authenticated();
@@ -50,7 +50,8 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
         //h2 console 사용을 위한 설정
         http
                 .csrf()
-                .ignoringAntMatchers("/api/login", "/h2-console/**");
+//                .ignoringAntMatchers("/api/login", "/h2-console/**");
+                .ignoringAntMatchers("/h2-console/**");
 
     }
 

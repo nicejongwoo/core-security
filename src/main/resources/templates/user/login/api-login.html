@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_template}">
+
+	<body>
+		<div layout:fragment="content" class="container d-flex justify-content-center">
+			<div style="margin-top: 30px; margin-bottom: 30px;" class="col-4">
+				<div class="panel text-center">
+					<p>아이디와 비밀번호를 입력해주세요.</p>
+				</div>
+				<div th:if="${param.error}" class="form-group">
+					<span th:text="${message}" class="d-block alert alert-danger text-center">에러메시지</span>
+				</div>
+				<form class="form-horizontal" >
+					<input type="hidden" name="param1" value="param1">
+					<div class="form-group">
+						<input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required/>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control input-large" name="password" id="password" placeholder="password" required/>
+					</div>
+	                <button type="button" onclick="formLogin()" id="formbtn" class="btn btn-lg btn-primary btn-block">Ajax 로그인</button>
+				</form>
+
+				<script>
+				    function formLogin(e) {
+
+				        var username = $("input[name='username']").val().trim();
+				        var password = $("input[name='password']").val().trim();
+				        var data = {"username" : username, "password" : password};
+
+				        var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
+				        var csrfToken = $('meta[name="_csrf"]').attr('content')
+
+				        $.ajax({
+				            type: "post",
+				            url: "/api/login",
+				            data: JSON.stringify(data),
+				            dataType: "json",
+				            beforeSend : function(xhr){
+				                xhr.setRequestHeader(csrfHeader, csrfToken);
+				                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+				                xhr.setRequestHeader("Content-type","application/json");
+				            },
+				            success: function (data) {
+				                console.log(data);
+				                window.location = '/';
+				            },
+				            error : function(xhr, status, error) {
+				                console.log(error);
+				                window.location = '/login?error=true&exception=' + xhr.responseText;
+				            }
+				        });
+				    }
+				</script>
+			</div>
+		</div>
+
+
+	</body>
+
+
+
+</html>
