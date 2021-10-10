@@ -1,6 +1,8 @@
 package com.core.sec.security.config;
 
+import com.core.sec.security.common.AjaxLoginUrlAuthenticationEntryPoint;
 import com.core.sec.security.filter.AjaxLoginProcessingFilter;
+import com.core.sec.security.handler.AjaxAccessDeniedHandler;
 import com.core.sec.security.handler.AjaxAuthenticationFailureHandler;
 import com.core.sec.security.handler.AjaxAuthenticationSuccessHandler;
 import com.core.sec.security.provider.AjaxAuthenticationProvider;
@@ -34,12 +36,16 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/api/**")
                 .authorizeRequests()
+                .antMatchers("/api/messages").hasRole("MANAGER")
                 .anyRequest()
                 .authenticated();
 
         http
                 .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
+        http.exceptionHandling()
+                .authenticationEntryPoint(new AjaxLoginUrlAuthenticationEntryPoint())
+                .accessDeniedHandler(new AjaxAccessDeniedHandler());
 
         //h2 console 사용을 위한 설정
         http
