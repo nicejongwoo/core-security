@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <nav th:fragment="nav(currentMenu)" class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
+                        <a th:href="@{/admin/user}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'user'}? active">사용자관리</a>
+                        <a th:href="@{/admin/role}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'role'}? active">권한관리</a>
+                        <a th:href="@{/admin/resource}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'resource'}? active">리소스관리</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</html>
