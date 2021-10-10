@@ -53,5 +53,12 @@ public class UserManagementController {
         return "redirect:/admin/users";
     }
 
+    @GetMapping("/users/{username}/delete")
+    public String deleteUser(@PathVariable("username") String username, RedirectAttributes redirectAttributes) {
+        userService.deleteUser(username);
+        redirectAttributes.addFlashAttribute("message", "사용자를 삭제했습니다.");
+        return "redirect:/admin/users";
+    }
+
 
 }

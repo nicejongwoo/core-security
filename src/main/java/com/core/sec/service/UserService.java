@@ -14,4 +14,7 @@ public interface UserService {
     AccountDto getUser(String username);
 
     void updateUser(AccountDto accountDto);
+
+    void deleteUser(String username);
+
 }

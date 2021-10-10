@@ -71,4 +71,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(account);
     }
 
+    @Transactional
+    @Override
+    public void deleteUser(String username) {
+        Account account = userRepository.findByUsername(username);
+        account.getUserRoles().removeAll(account.getUserRoles());
+        userRepository.deleteByUsername(username);
+    }
+
 }

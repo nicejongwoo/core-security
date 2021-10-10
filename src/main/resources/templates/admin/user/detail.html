@@ -49,7 +49,21 @@
 								<div class="col-sm-offset-1 col-sm-10">
 									<button type="Submit" class="btn btn-dark btn-lg">등록</button>
 									<a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/users}">목록 </a>
+									<a class="btn btn-danger btn-lg btn_delete" style="margin:10;"
+									   th:href="@{'/admin/users/'+${user.username}+'/delete'}">삭제 </a>
 								</div>
+
+								<script>
+									$(".btn_delete").click(function(e){
+										e.preventDefault();
+										var result = confirm("정말 삭제하시겠습니까?");
+										if(result){
+										    location.href = this.href;
+										}else{
+										    return ;
+										}
+									});
+								</script>
 							</div>
 						</form>
 					</div>
