@@ -1,6 +1,6 @@
 package com.core.sec.security.service;
 
-import com.core.sec.domain.Account;
+import com.core.sec.domain.entity.Account;
 import com.core.sec.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -28,11 +30,13 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("username not found");
         }
 
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(account.getRole()));
+        Set<String> userRoles = account.getUserRoles()
+                .stream()
+                .map(userRole -> userRole.getRoleName())
+                .collect(Collectors.toSet());
 
-        CustomUser customUser = new CustomUser(account, roles);
+        List<SimpleGrantedAuthority> collect = userRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
-        return customUser;
+        return new CustomUser(account, collect);
     }
 }

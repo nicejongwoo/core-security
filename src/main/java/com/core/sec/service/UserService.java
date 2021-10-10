@@ -1,6 +1,7 @@
 package com.core.sec.service;
 
-import com.core.sec.domain.Account;
+import com.core.sec.domain.dto.AccountDto;
+import com.core.sec.domain.entity.Account;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface UserService {
 
     List<Account> getUsers();
 
-    Account getUser(String username);
+    AccountDto getUser(String username);
 }

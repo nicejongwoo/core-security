@@ -26,7 +26,9 @@
 									<td th:text="${user.email}">이메일</td>
 									<td th:text="${user.age}">이메일</td>
 									<td>
-										<span th:text="${user.role}"></span>
+										<span th:each="role:${user.userRoles}">
+											<h6 th:text="${role.roleName}">권한</h6>
+										</span>
 									</td>
 								</tr>
 							</tbody>
