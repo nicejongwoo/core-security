@@ -29,11 +29,12 @@ public class RoleManagementController {
     }
 
     @GetMapping("/{id}")
-    public String detail(@PathVariable("id") String id, Model model) {
+    public String editForm(@PathVariable("id") String id, Model model) {
         RoleDto role = roleService.getRole(id);
         log.debug("role = " + role);
         model.addAttribute("role", role);
-        return "admin/role/detail";
+        return "admin/role/addOrEdit";
     }
+
 
 }
