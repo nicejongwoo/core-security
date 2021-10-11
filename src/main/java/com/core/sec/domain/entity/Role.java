@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Getter
@@ -29,5 +30,9 @@ public class Role {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userRoles")
     private Set<Account> users = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roleSet")
+    @OrderBy("ordernum desc")
+    private Set<Resource> resourceSet = new LinkedHashSet<>();
 
 }
