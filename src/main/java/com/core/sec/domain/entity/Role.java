@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"users"})
+@ToString(exclude = {"users", "resourceSet"})
 @EqualsAndHashCode(of = "id")
 @Table(name = "ROLE")
 @Entity

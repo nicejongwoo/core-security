@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_template}">
+
+	<body>
+		<div layout:fragment="content" class="container">
+			<div class="row align-items-start">
+				<nav th:replace="fragments/admin/nav::nav(currentMenu='resource')"></nav>
+				<div class="col-md-10 pt-4">
+					<div class="container">
+						<form class="form-horizontal" th:action="${resource.id != null} ? @{'/admin/resources/'+${resource.id}+'/edit'} : @{/admin/resources/add}" method="post" th:object="${resource}">
+							<div class="form-group">
+								<label for="resourceName" class="d-block control-label">리소스명</label>
+								<div class="">
+									<input type="text" class="form-control input-large" name="resourceName" id="resourceName" placeholder="resourceName" th:value="*{resourceName}" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="resourceType" class="d-block control-label">리소스타입</label>
+								<div class="">
+									<input type="text" class="form-control input-large" name="resourceType" id="resourceType" placeholder="resourceType" th:value="*{resourceType}" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="HttpMethod" class="d-block control-label">HttpMethod</label>
+								<div class="">
+									<input type="text" class="form-control input-large" name="HttpMethod" id="HttpMethod" placeholder="HttpMethod" th:value="*{HttpMethod}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="orderNum" class="d-block control-label">순서</label>
+								<div class="">
+									<input type="text" class="form-control input-large" name="orderNum" id="orderNum" placeholder="orderNum" th:value="*{orderNum}" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="roleName" class="d-block control-label">권한</label>
+								<div class="">
+									<select class="custom-select" name="roleName" id="roleName">
+										<option th:each="role: ${roles}"
+										        th:value="${role.roleName}"
+										        th:text="${role.roleName}"
+										        th:selected="${resource.roleSet.contains(role)} ? 'true' : 'false'"/>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-1 col-sm-10">
+									<button type="Submit" class="btn btn-primary btn-lg">등록</button>
+									<a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/resources}">목록 </a>
+									<a class="btn btn-danger btn-lg btn_delete" style="margin:10;"
+									   th:if="${resource.id != null}" th:href="@{'/admin/resources/'+${resource.id}+'/delete'}">삭제 </a>
+								</div>
+
+								<script>
+									$(".btn_delete").click(function(e){
+										e.preventDefault();
+										var result = confirm("정말 삭제하시겠습니까?");
+										if(result){
+										    location.href = this.href;
+										}else{
+										    return ;
+										}
+									});
+								</script>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

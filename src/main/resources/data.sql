@@ -16,3 +16,7 @@ insert into account_roles (account_id, role_id) values (90002, 90002);
 insert into account_roles (account_id, role_id) values (90003, 90001);
 insert into account_roles (account_id, role_id) values (90003, 90002);
 insert into account_roles (account_id, role_id) values (90003, 90003);
+
+insert into resource (resource_id, resource_name, resource_type, order_num) values (90001, '/admin/**', 'url', 1);
+
+insert into role_resource (resource_id, role_id) values (90001, 90003);

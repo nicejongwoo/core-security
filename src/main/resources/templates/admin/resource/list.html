@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_template}">
+
+	<body>
+		<div layout:fragment="content" class="container">
+			<div class="row align-items-start">
+				<nav th:replace="fragments/admin/nav::nav(currentMenu='resource')"></nav>
+				<div class="col-md-10 text-center pt-4">
+					<div class="container text-center">
+						<div class="alert alert-info" th:if="${message}" th:text="${message}"></div>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th scope="col">리소스명</th>
+									<th scope="col">리소스타입</th>
+									<th scope="col">HttpMethod</th>
+									<th scope="col">순서</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="link_btn hover" th:each="resource:${resources}">
+									<td>
+										<a th:href="@{'/admin/resources/'+${resource.id}}"><span th:text="${resource.resourceName}">리소스명</span></a>
+									</td>
+									<td th:text="${resource.resourceType}">리소스타입</td>
+									<td th:text="${resource.httpMethod}">HttpMethod</td>
+									<td th:text="${resource.orderNum}">순서</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="col-sm-offset-1 col-sm-12">
+							<a th:href="@{/admin/resources/add}" class="btn btn-dark btn-lg">등록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
