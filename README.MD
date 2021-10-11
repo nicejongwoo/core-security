@@ -9,7 +9,7 @@
 
 ### 프로젝트 임포트 방법
 #### IntelliJ
-* `git clone git remote add origin https://github.com/willdonejw/core-security.git`
+* `git clone https://github.com/willdonejw/core-security.git`
 * open IntelliJ
 * File - open - core-security
 * Open As Project
