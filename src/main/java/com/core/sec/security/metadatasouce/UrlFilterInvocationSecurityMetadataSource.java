@@ -1,5 +1,7 @@
 package com.core.sec.security.metadatasouce;
 
+import com.core.sec.service.SecurityResourceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -8,14 +10,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@RequiredArgsConstructor
 public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap;
-
-    public UrlFilterInvocationSecurityMetadataSource(LinkedHashMap<RequestMatcher, List<ConfigAttribute>> resourcesMap) {
-        // DB 연동
-        this.requestMap = resourcesMap;
-    }
+    private final LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap;
+    private final SecurityResourceService securityResourceService;
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
@@ -54,5 +53,16 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     @Override
     public boolean supports(Class<?> aClass) {
         return FilterInvocation.class.isAssignableFrom(aClass);
+    }
+
+    public void reload() {
+        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadedMap = securityResourceService.getResourceList();
+        Set<Map.Entry<RequestMatcher, List<ConfigAttribute>>> entries = reloadedMap.entrySet();
+
+        requestMap.clear();
+
+        for (Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : entries) {
+            requestMap.put(entry.getKey(), entry.getValue());
+        }
     }
 }

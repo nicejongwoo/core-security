@@ -3,6 +3,7 @@ package com.core.sec.controller.admin;
 import com.core.sec.domain.dto.ResourceDto;
 import com.core.sec.domain.entity.Resource;
 import com.core.sec.domain.entity.Role;
+import com.core.sec.security.metadatasouce.UrlFilterInvocationSecurityMetadataSource;
 import com.core.sec.service.ResourceService;
 import com.core.sec.service.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ResourceManagementController {
 
     private final ResourceService resourceService;
     private final RoleService roleService;
+    private final UrlFilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource;
 
     @GetMapping("")
     public String list(Model model) {
@@ -51,6 +53,8 @@ public class ResourceManagementController {
     public String edit(@PathVariable("id") String id, ResourceDto resourceDto, RedirectAttributes redirectAttributes) {
         resourceDto.setId(id);
         resourceService.updateResource(resourceDto);
+        urlFilterInvocationSecurityMetadataSource.reload();
+
         redirectAttributes.addFlashAttribute("message", "수정을 완료했습니다.");
         return "redirect:/admin/resources";
     }
@@ -71,6 +75,8 @@ public class ResourceManagementController {
     @PostMapping("/add")
     public String add(ResourceDto resourceDto, RedirectAttributes redirectAttributes) {
         resourceService.createResource(resourceDto);
+        urlFilterInvocationSecurityMetadataSource.reload();
+
         redirectAttributes.addFlashAttribute("message", "등록을 완료했습니다.");
         return "redirect:/admin/resources";
     }
@@ -79,6 +85,8 @@ public class ResourceManagementController {
     public String delete(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         String message = "리소스를 삭제했습니다.";
         resourceService.deleteResource(id);
+        urlFilterInvocationSecurityMetadataSource.reload();
+
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/admin/resources";
     }
