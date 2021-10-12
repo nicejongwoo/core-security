@@ -1,6 +1,7 @@
 package com.core.sec.security.config;
 
 import com.core.sec.security.factory.UrlResourcesMapFactoryBean;
+import com.core.sec.security.filter.PermitAllFilter;
 import com.core.sec.security.handler.FormAccessDeniedHandler;
 import com.core.sec.security.handler.FormAuthenticationFailureHandler;
 import com.core.sec.security.handler.FormAuthenticationSuccessHandler;
@@ -45,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityResourceService securityResourceService;
+
+    private String[] permitAllResources = {"/", "/login", "/user/login**"};
 
 
     @Override
@@ -111,8 +114,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
-        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+    public PermitAllFilter customFilterSecurityInterceptor() throws Exception {
+        PermitAllFilter filterSecurityInterceptor = new PermitAllFilter(permitAllResources);
 
         filterSecurityInterceptor.setSecurityMetadataSource(urlFilterInvocationSecurityMetadataSource());
         filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
