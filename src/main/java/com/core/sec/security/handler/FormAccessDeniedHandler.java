@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 public class FormAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -14,7 +15,7 @@ public class FormAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        String deniedUrl = errorPage + "?message=" + e.getMessage();
+        String deniedUrl = errorPage + "?message=" + URLEncoder.encode(e.getMessage());
         httpServletResponse.sendRedirect(deniedUrl);
     }
 
