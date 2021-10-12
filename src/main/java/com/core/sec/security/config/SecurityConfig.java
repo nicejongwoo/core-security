@@ -1,10 +1,12 @@
 package com.core.sec.security.config;
 
+import com.core.sec.security.factory.UrlResourcesMapFactoryBean;
 import com.core.sec.security.handler.FormAccessDeniedHandler;
 import com.core.sec.security.handler.FormAuthenticationFailureHandler;
 import com.core.sec.security.handler.FormAuthenticationSuccessHandler;
 import com.core.sec.security.metadatasouce.UrlFilterInvocationSecurityMetadataSource;
 import com.core.sec.security.provider.FormAuthenticationProvider;
+import com.core.sec.service.SecurityResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private FormAuthenticationFailureHandler authenticationFailureHandler;
 
+    @Autowired
+    private SecurityResourceService securityResourceService;
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(formAuthenticationProvider());
@@ -71,7 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(customAccessDeniedHandler());
 
         http.addFilterBefore(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
-
 
         //h2 console 사용을 위한 설정
         http
@@ -126,8 +131,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource() {
-        return new UrlFilterInvocationSecurityMetadataSource();
+    public FilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource() throws Exception {
+        return new UrlFilterInvocationSecurityMetadataSource(urlResourcesMapFactoryBean().getObject());
+    }
+
+    private UrlResourcesMapFactoryBean urlResourcesMapFactoryBean() {
+        UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
+        urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
+        return urlResourcesMapFactoryBean;
     }
 
 

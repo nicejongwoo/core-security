@@ -11,10 +11,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = {"roleSet"})
+@EqualsAndHashCode(of = "id")
 @Builder
 @EntityListeners(value = {AuditingEntityListener.class})
+@Table(name = "RESOURCE")
 @Entity
 public class Resource {
 
