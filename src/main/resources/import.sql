@@ -8,10 +8,10 @@ insert into role (role_id, role_desc, role_name) values (90002, '매니저권한
 insert into role (role_id, role_desc, role_name) values (90003, '관리자권한', 'ROLE_ADMIN');
 
 insert into account_roles (account_id, role_id) values (90001, 90001);
-insert into account_roles (account_id, role_id) values (90002, 90001);
+--insert into account_roles (account_id, role_id) values (90002, 90001);
 insert into account_roles (account_id, role_id) values (90002, 90002);
-insert into account_roles (account_id, role_id) values (90003, 90001);
-insert into account_roles (account_id, role_id) values (90003, 90002);
+--insert into account_roles (account_id, role_id) values (90003, 90001);
+--insert into account_roles (account_id, role_id) values (90003, 90002);
 insert into account_roles (account_id, role_id) values (90003, 90003);
 
 insert into resource (resource_id, resource_name, resource_type, order_num) values (90001, '/admin/**', 'url', 1);

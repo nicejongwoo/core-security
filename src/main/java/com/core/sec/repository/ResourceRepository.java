@@ -12,7 +12,10 @@ import java.util.List;
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
+    Resource findByResourceNameAndHttpMethod(String resourceName, String httpMethod);
+
     @Transactional(readOnly = true)
     @Query("select r from Resource r join fetch r.roleSet where r.resourceType = 'url' order by r.orderNum desc")
     List<Resource> findAllResource();
+
 }
