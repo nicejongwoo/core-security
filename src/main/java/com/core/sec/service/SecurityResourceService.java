@@ -1,6 +1,7 @@
 package com.core.sec.service;
 
 import com.core.sec.domain.entity.Resource;
+import com.core.sec.repository.AccessIpRepository;
 import com.core.sec.repository.ResourceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.ConfigAttribute;
@@ -13,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class SecurityResourceService {
 
     private final ResourceRepository resourceRepository;
+    private final AccessIpRepository accessIpRepository;
 
     @Transactional(readOnly = true)
     public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getResourceList() {
@@ -32,5 +35,13 @@ public class SecurityResourceService {
             result.put(new AntPathRequestMatcher(resource.getResourceName()), configAttributeList);
         });
         return result;
+    }
+
+    public List<String> getAccessIpList() {
+        List<String> accessIpList = accessIpRepository.findAll()
+                .stream()
+                .map(accessIp -> accessIp.getIpAddress())
+                .collect(Collectors.toList());
+        return accessIpList;
     }
 }

@@ -7,6 +7,7 @@ import com.core.sec.security.handler.FormAuthenticationFailureHandler;
 import com.core.sec.security.handler.FormAuthenticationSuccessHandler;
 import com.core.sec.security.metadatasouce.UrlFilterInvocationSecurityMetadataSource;
 import com.core.sec.security.provider.FormAuthenticationProvider;
+import com.core.sec.security.voter.AccessIpVoter;
 import com.core.sec.service.SecurityResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -135,6 +136,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+        accessDecisionVoters.add(new AccessIpVoter(securityResourceService));
         accessDecisionVoters.add(roleVoter());
         return accessDecisionVoters;
     }
