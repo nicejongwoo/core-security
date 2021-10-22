@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_template}">
+
+	<body>
+		<div layout:fragment="content" class="container">
+			<div class="row align-items-start">
+				<nav th:replace="fragments/nav::nav(currentMenu='method')"></nav>
+				<div class="col-md-10 text-center pt-4">
+					<h1 th:text="${method}"></h1>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
