@@ -44,4 +44,17 @@ public class SecurityResourceService {
                 .collect(Collectors.toList());
         return accessIpList;
     }
+
+    public LinkedHashMap<String, List<ConfigAttribute>> getMethodResourceList() {
+        LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
+        List<Resource> resourceList = resourceRepository.findAllMethodResources();
+        resourceList.forEach(resource -> {
+            List<ConfigAttribute> configAttributeList = new ArrayList<>();
+            resource.getRoleSet().forEach(role -> {
+                configAttributeList.add(new SecurityConfig(role.getRoleName()));
+            });
+            result.put(resource.getResourceName(), configAttributeList);
+        });
+        return result;
+    }
 }
