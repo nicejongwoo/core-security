@@ -8,6 +8,7 @@ import com.core.sec.repository.UserRepository;
 import com.core.sec.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +78,12 @@ public class UserServiceImpl implements UserService {
         Account account = userRepository.findByUsername(username);
         account.getUserRoles().removeAll(account.getUserRoles());
         userRepository.deleteByUsername(username);
+    }
+
+    @Secured("ROLE_USER")
+    @Override
+    public void order() {
+        System.out.println("UserService.order() - order");
     }
 
 }

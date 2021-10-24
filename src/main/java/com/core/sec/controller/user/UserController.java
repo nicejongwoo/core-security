@@ -39,4 +39,10 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/order")
+    public String order() {
+        userService.order();
+        return "user/order";
+    }
 }

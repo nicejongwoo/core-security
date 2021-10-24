@@ -11,6 +11,7 @@
                         <a th:href="@{/api/messages}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'api-messages'}? active">API 메시지</a>
                         <a th:href="@{/config}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'config'}? active">환경설정</a>
                         <a th:href="@{/preAuthorize(username='user')}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'method'}? active">@메서드보안</a>
+                        <a th:href="@{/order}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'order'}? active">ORDER</a>
                     </div>
                 </li>
             </ul>
