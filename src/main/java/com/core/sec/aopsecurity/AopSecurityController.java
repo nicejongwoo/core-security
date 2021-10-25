@@ -1,7 +1,6 @@
 package com.core.sec.aopsecurity;
 
 import com.core.sec.domain.dto.AccountDto;
-import com.core.sec.security.factory.MethodResourcesFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,10 @@ public class AopSecurityController {
     private AopMethodService aopMethodService;
 
     @Autowired
-    private MethodResourcesFactoryBean methodResourcesFactoryBean;
+    private AopPointcutService aopPointcutService;
+
+//    @Autowired
+//    private MethodResourcesFactoryBean methodResourcesFactoryBean;
 
     @GetMapping("/preAuthorize")
     @PreAuthorize("hasRole('ROLE_USER') and #accountDto.username == principal.username")
@@ -32,6 +34,15 @@ public class AopSecurityController {
         aopMethodService.methodSecured();
         model.addAttribute("method", "Success methodSecured");
         return "aop/method2";
+    }
+
+    @GetMapping("/pointcutSecured")
+    public String pointcutSecured(Model model) {
+        aopPointcutService.notSecured();
+        aopPointcutService.pointcutSecured();
+        model.addAttribute("method", "Success PointcutSecured");
+
+        return "aop/pointcut";
     }
 
 }

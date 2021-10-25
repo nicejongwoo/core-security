@@ -27,3 +27,7 @@ insert into role_resource (resource_id, role_id) values (90004, 90003);
 -- method 인가 처리 테스트 데이터
 insert into resource (resource_id, resource_name, resource_type, order_num) values (90005, 'com.core.sec.aopsecurity.AopMethodService.methodSecured', 'method', 5);
 insert into role_resource (resource_id, role_id) values (90005, 90001);
+
+-- pointcut 인가 처리 테스트 데이터
+insert into resource (resource_id, resource_name, resource_type, order_num) values (90006, 'execution(* com.core.sec.aopsecurity.AopPointcutService.pointcut*(..))', 'pointcut', 6);
+insert into role_resource (resource_id, role_id) values (90006, 90001);

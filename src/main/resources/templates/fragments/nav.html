@@ -13,6 +13,7 @@
                         <a th:href="@{/preAuthorize(username='user')}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'method'}? active">@메서드보안</a>
                         <a th:href="@{/order}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'order'}? active">ORDER</a>
                         <a th:href="@{/methodSecured}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'methodSecured'}? active">methodSecured</a>
+                        <a th:href="@{/pointcutSecured}" style="margin:5px;" class="nav-link" th:classappend="${currentMenu == 'pointcut'}? active">pointcutSecured</a>
                     </div>
                 </li>
             </ul>
